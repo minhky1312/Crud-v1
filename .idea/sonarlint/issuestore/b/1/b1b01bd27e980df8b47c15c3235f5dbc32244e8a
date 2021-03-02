@@ -1,0 +1,28 @@
+
+o	java:S100P"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½óÇˆÿÿÿÿÿ8—ïÿæş.
+e
+java:S3252 "IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(ºÀœx8—ïÿæş.
+M
+java:S1481A"+Remove this unused "column" local variable.(Ø„è”ıÿÿÿÿ8—ïÿæş.
+C
+java:S1948"&Make "city" transient or serializable.(ñàï©8§œŠçş.
+X	java:S110"<This class has 6 parents which is greater than 5 authorized.(¨´İ³8Ó”¹äş.
+>
+java:S1116H"Remove this empty statement.(²ïşşÿÿÿÿ8—ïÿæş.
+A
+java:S1948"$Make "c2" transient or serializable.(†óúÚ8§œŠçş.
+Z
+java:S1197A"8Move the array designator from the variable to the type.(Ø„è”ıÿÿÿÿ8—ïÿæş.
+F
+java:S1948"$Make "c1" transient or serializable.(³ŞŞ“øÿÿÿÿ8§œŠçş.
+v
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ñàï©8›Òÿæş.
+F
+java:S1948"$Make "c4" transient or serializable.(¼İ†´ûÿÿÿÿ8§œŠçş.
+I
+java:S1481%",Remove this unused "btnRend" local variable.(Şïî»8Ğìèş.
+m	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À„ñì8—ïÿæş.
+m
+java:S1192"KDefine a constant instead of duplicating this literal "ÄÃ  Náºµg" 4 times.(³ŞŞ“øÿÿÿÿ8§œŠçş.
+A
+java:S1948"$Make "c3" transient or serializable.(ş„ÒË8§œŠçş.
