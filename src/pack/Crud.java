@@ -11,24 +11,52 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Crud extends JFrame {
 
-    DefaultTableModel model = new DefaultTableModel();
-    List<City> city = new ArrayList<City>();
-    City c1 = new City(1,"NVN", "Nguyễn Văn N","Đà Nẵng","Cho phép");
-    City c2 = new City(2,"NVA", "Nguyễn Văn A","Đà Nẵng","Cho phép");
-    City c3 = new City(3,"NVB", "Nguyễn Văn B","Đà Nẵng","Cho phép");
-    City c4 = new City(4,"NVC", "Nguyễn Văn C","Đà Nẵng","Không Cho phép")
-            ;
+    static DefaultTableModel model = new DefaultTableModel();
+    static List<City> city = new ArrayList<City>();
+
+    static String DB_URL = "jdbc:mysql://127.0.0.1:3306/crud";
+    static String USER_NAME = "root";
+    static String PASSWORD = "";
+
     public static void main(String[] args) {
 
-
+        //List<City> city = new ArrayList<City>();
 
             Crud crud = new Crud();
             crud.setVisible(true);
+
+        try{
+            Connection myConn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+            Statement myStmt = myConn.createStatement();
+            String sql = "select * from crudd";
+
+            ResultSet rs = myStmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String sname = rs.getNString("sname");
+                String namee = rs.getNString("namee");
+                String area = rs.getNString("area");
+                String flag = rs.getNString("flag");
+
+                City ct = new City(id,sname,namee,area,flag);
+                city.add(ct);
+                addrow(ct);
+            }
+
+
+      } catch (
+    SQLException e) {
+        System.out.println("connect failure!");
+        e.printStackTrace();
+    }
+
     }
 
     public Crud()
@@ -118,6 +146,10 @@ public class Crud extends JFrame {
         scrollPane7.setViewportView(tfflag);
 
 
+        for (City ct : city) {
+           addrow(ct);
+           JOptionPane.showMessageDialog(null,ct.flag);
+        }
 
         JTable crudtable = new JTable(model);
 
@@ -129,10 +161,7 @@ public class Crud extends JFrame {
 
         Setboundtable(crudtable);
 
-        addrow(c1);
-        addrow(c2);
-        addrow(c3);
-        addrow(c4);
+
 
         String column[]= {"Mã tỉnh","Tên viết tắt","Tên","Khu vực","Trạng thái","Thao tác"};
 
@@ -206,6 +235,7 @@ public class Crud extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int[] selectedRow = crudtable.getSelectedRows();
+                deleterow(crudtable.getModel().getValueAt(selectedRow[0], 0).toString());
                 model.removeRow(selectedRow[0]);
                 tfarea.setText("");
                 tfflag.setText("");
@@ -234,6 +264,8 @@ public class Crud extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedRow = crudtable.getSelectedRows();
 
+
+                updaterow(crudtable.getModel().getValueAt(selectedRow[0],0).toString(),tfsname.getText(),tfname.getText(),tfarea.getText(),tfflag.getText());
                 crudtable.setValueAt(tfsname.getText(),selectedRow[0],1);
                 crudtable.setValueAt(tfname.getText(),selectedRow[0],2);
                 crudtable.setValueAt(tfarea.getText(),selectedRow[0],3);
@@ -268,11 +300,43 @@ public class Crud extends JFrame {
         }
     }
 
-    public void addrow(City c)
+    static  void addrow(City c)
     {
         model.addRow(new Object[] {c.id,c.sname,c.name,c.area,c.flag});
 
     }
 
+    public void deleterow(String key) {
+        try {
+            Connection myConn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+            Statement myStmt = myConn.createStatement();
 
+            String sql1 = "DELETE FROM crudd WHERE id = "+key ;
+            myStmt.executeUpdate(sql1);
+        } catch (
+                SQLException e) {
+            System.out.println("connect failure!");
+            e.printStackTrace();
+        }
+    }
+    public void updaterow(String key,String sname,String name,String area,String flag)
+    {
+        try {
+            Connection myConn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+            Statement myStmt = myConn.createStatement();
+
+            String sql1 = "UPDATE crudd " +
+                          "SET sname = '"+sname+ "', "
+                              +"namee = '"+name+ "', "
+                              +"area = '"+area+ "', "
+                              +"flag = '"+flag+ "' "
+                              +"WHERE id = "+key;
+
+            myStmt.executeUpdate(sql1);
+        } catch (
+                SQLException e) {
+            System.out.println("connect failure!");
+            e.printStackTrace();
+        }
+    }
 }
